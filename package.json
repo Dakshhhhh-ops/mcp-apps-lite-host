@@ -1,0 +1,11 @@
+{
+  "name": "mcp-apps-lite-host",
+  "version": "0.1.0",
+  "description": "Render MCP Apps (ext-apps) views in any web page: a tiny, dependency-free host bridge.",
+  "type": "module",
+  "main": "mcp-apps-host.js",
+  "exports": "./mcp-apps-host.js",
+  "files": ["mcp-apps-host.js"],
+  "keywords": ["mcp", "model-context-protocol", "mcp-apps", "ext-apps", "iframe", "postMessage"],
+  "license": "MIT"
+}
