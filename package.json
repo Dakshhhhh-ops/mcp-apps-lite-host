@@ -5,7 +5,28 @@
   "type": "module",
   "main": "mcp-apps-host.js",
   "exports": "./mcp-apps-host.js",
-  "files": ["mcp-apps-host.js"],
-  "keywords": ["mcp", "model-context-protocol", "mcp-apps", "ext-apps", "iframe", "postMessage"],
-  "license": "MIT"
+  "files": [
+    "mcp-apps-host.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-apps",
+    "ext-apps",
+    "iframe",
+    "postMessage"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dakshhhhh-ops/mcp-apps-lite-host"
+  }
 }
