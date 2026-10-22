@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>browser test host</title></head>
+<body>
+<div id="slot" style="width:600px"></div>
+<script type="module">
+import { McpAppHost } from "../../mcp-apps-host.js";
+
+// The test calls render(...) with plain options; callbacks are filled in here and recorded.
+window.events = [];
+window.render = (opts) => {
+  const record = (type) => (value) => { window.events.push({ type, value }); };
+  window.host = new McpAppHost({
+    container: document.getElementById("slot"),
+    callTool: async (name, args) => ({ content: [{ type: "text", text: `called ${name}` }], structuredContent: { name, args } }),
+    readResource: async (uri) => ({ contents: [{ uri, mimeType: "text/plain", text: "resource body" }] }),
+    onMessage: record("message"),
+    onOpenLink: record("open-link"),
+    onModelContext: record("model-context"),
+    onSizeChange: record("size"),
+    availableDisplayModes: ["inline", "fullscreen"],
+    ...opts,
+  }).mount();
+};
+window.unmountView = () => window.host.unmount("test done");
+</script>
+</body>
+</html>

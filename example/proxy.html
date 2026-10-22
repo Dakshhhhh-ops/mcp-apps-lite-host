@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mcp-apps-lite-host: sandbox proxy example</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 24px; font: 15px/1.5 system-ui, sans-serif; background: #0b1220; color: #e8eefc; }
+  .card { max-width: 560px; border: 1px solid #22304d; border-radius: 16px; padding: 12px; background: #0f1830; }
+  pre { background: #08101f; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 260px; overflow: auto; }
+</style>
+</head>
+<body>
+<h1>Sandbox proxy</h1>
+<p>Open this page at <code>http://127.0.0.1:8099</code>. The view runs behind <code>sandbox-proxy.html</code> served from <code>http://localhost:8099</code>, a different origin.</p>
+<div class="card" id="slot"></div>
+<h3>Protocol log</h3>
+<pre id="log"></pre>
+<script type="module">
+import { McpAppHost } from "../mcp-apps-host.js";
+
+const VIEW = `<!doctype html><body style="font:16px system-ui;color:#fff;margin:0;padding:12px">
+<div id="out">Waiting for the tool result…</div><div id="where" style="opacity:.6;font-size:13px"></div>
+<button id="b" style="margin-top:10px">Mark taken</button>
+<script>
+let id = 0; const pending = {};
+const send = (method, params) => new Promise(r => { const i = ++id; pending[i] = r; parent.postMessage({jsonrpc:"2.0", id:i, method, params}, "*"); });
+const notify = (method, params) => parent.postMessage({jsonrpc:"2.0", method, params}, "*");
+document.getElementById("where").textContent = "View origin: " + self.origin;
+addEventListener("message", e => {
+  const m = e.data;
+  if (m.id && pending[m.id]) { pending[m.id](m.result ?? m.error); delete pending[m.id]; return; }
+  if (m.method === "ui/notifications/tool-result") {
+    document.getElementById("out").textContent = m.params.structuredContent.speech;
+    notify("ui/notifications/size-changed", { height: document.body.scrollHeight });
+  }
+});
+document.getElementById("b").onclick = async () => {
+  const r = await send("tools/call", { name: "log_medication", arguments: { medication: "metformin" } });
+  document.getElementById("out").textContent = r.structuredContent.speech;
+};
+send("ui/initialize", { appInfo: { name: "demo-view", version: "1" }, appCapabilities: {}, protocolVersion: "2026-01-26" })
+  .then(() => notify("ui/notifications/initialized", {}));
+<\/script>`;
+
+const port = location.port || "80";
+new McpAppHost({
+  container: document.getElementById("slot"),
+  html: VIEW,
+  sandboxProxy: `http://localhost:${port}/sandbox-proxy.html`,
+  tool: { name: "get_today" },
+  toolInput: {},
+  toolResult: { content: [], structuredContent: { speech: "Metformin is due at 6 PM." } },
+  callTool: async (name, args) => ({ content: [], structuredContent: { speech: `Logged ${args.medication} as taken.` } }),
+  onLog: (e) => { document.getElementById("log").textContent += `${e.dir}  ${JSON.stringify(e.msg).slice(0, 300)}\n`; },
+  maxHeight: 400,
+}).mount();
+</script>
+</body>
+</html>

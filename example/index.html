@@ -42,7 +42,7 @@ document.getElementById("b").onclick = async () => {
   const r = await send("tools/call", { name: "log_medication", arguments: { medication: "metformin" } });
   document.getElementById("out").textContent = r.structuredContent.speech;
 };
-send("ui/initialize", { appCapabilities: {}, clientInfo: { name: "demo-view", version: "1" }, protocolVersion: "2026-01-26" })
+send("ui/initialize", { appInfo: { name: "demo-view", version: "1" }, appCapabilities: {}, protocolVersion: "2026-01-26" })
   .then(() => notify("ui/notifications/initialized", {}));
 <\/script>`;
 

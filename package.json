@@ -1,12 +1,16 @@
 {
   "name": "mcp-apps-lite-host",
-  "version": "0.1.0",
-  "description": "Render MCP Apps (ext-apps) views in any web page: a tiny, dependency-free host bridge.",
+  "version": "0.2.0",
+  "description": "Render MCP Apps (ext-apps) views in any web page: a dependency-free host with CSP, permissions, tool visibility and a sandbox proxy.",
   "type": "module",
   "main": "mcp-apps-host.js",
-  "exports": "./mcp-apps-host.js",
+  "exports": {
+    ".": "./mcp-apps-host.js",
+    "./sandbox-proxy.html": "./sandbox-proxy.html"
+  },
   "files": [
     "mcp-apps-host.js",
+    "sandbox-proxy.html",
     "README.md",
     "LICENSE"
   ],
@@ -16,11 +20,16 @@
     "mcp-apps",
     "ext-apps",
     "iframe",
-    "postMessage"
+    "postMessage",
+    "sandbox",
+    "csp"
   ],
   "license": "MIT",
   "scripts": {
-    "test": "node --test"
+    "test": "npm run test:unit && npm run test:browser",
+    "test:unit": "node --test test/host.test.js",
+    "test:browser": "node --test test/browser.test.js",
+    "example": "node test/serve.js"
   },
   "engines": {
     "node": ">=18"
@@ -28,5 +37,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Dakshhhhh-ops/mcp-apps-lite-host"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "playwright": "1.64.1"
   }
 }
