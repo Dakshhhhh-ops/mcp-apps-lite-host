@@ -12,7 +12,8 @@
     "mcp-apps-host.js",
     "sandbox-proxy.html",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "mcp",
@@ -25,6 +26,11 @@
     "csp"
   ],
   "license": "MIT",
+  "author": "Daksh",
+  "homepage": "https://github.com/Dakshhhhh-ops/mcp-apps-lite-host#readme",
+  "bugs": {
+    "url": "https://github.com/Dakshhhhh-ops/mcp-apps-lite-host/issues"
+  },
   "scripts": {
     "test": "npm run test:unit && npm run test:browser",
     "test:unit": "node --test test/host.test.js",

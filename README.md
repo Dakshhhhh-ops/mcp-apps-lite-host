@@ -1,5 +1,10 @@
 # mcp-apps-lite-host
 
+[![test](https://github.com/Dakshhhhh-ops/mcp-apps-lite-host/actions/workflows/test.yml/badge.svg)](https://github.com/Dakshhhhh-ops/mcp-apps-lite-host/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Dependencies: 0](https://img.shields.io/badge/dependencies-0-brightgreen)
+![ext-apps 2026-01-26](https://img.shields.io/badge/ext--apps-2026--01--26-0aa)
+
 Render [MCP Apps](https://github.com/modelcontextprotocol/ext-apps) views in any web page with one dependency-free ES module, including the security rules the spec asks hosts to enforce.
 
 MCP Apps lets an MCP tool point at an interactive `ui://` HTML view (`_meta.ui.resourceUri`). A host renders that view in a sandboxed iframe and talks to it over JSON-RPC via `postMessage`. This library is the host side, so a custom web app, simulator, inspector or dashboard can show MCP Apps views without a framework or a build step.
@@ -150,6 +155,9 @@ npm run test:browser              # 6 tests in Chromium
 ```
 - **Unit**: the handshake and ordering rules, every request and notification, errors, visibility, the source and origin checks, proxy mode, teardown, the CSP and `allow` builders.
 - **Browser**: an official SDK view end to end in both modes (tool input and result, `callServerTool`, `readServerResource`, `sendMessage`, `openLink`, `requestDisplayMode`, `updateModelContext`, auto-resize, `onteardown`); CSP blocking undeclared origins, and blocking the SDK itself when its CDN isn't declared; the `allow` attribute in Chromium; the proxy's lockdown.
+
+## Contributing
+Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to run the tests, and [SECURITY.md](SECURITY.md) for reporting a vulnerability privately.
 
 ## License
 MIT
