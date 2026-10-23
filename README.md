@@ -143,7 +143,7 @@ Helpers: `buildCsp(csp, {inline})`, `buildAllow(permissions)`, `injectCsp(html, 
 - Like any CSP-based sandbox, this doesn't stop a view from navigating itself to another page. Treat what you send a view as visible to its server.
 
 ## Spec note
-The spec's security section builds the `allow` attribute with `allowList.join(' ')`. Permissions Policy separates features with `;`, so `allow="camera microphone"` doesn't grant both (a browser test here shows it). This library and the official `AppBridge` both use `"; "`.
+The spec's security section builds the `allow` attribute with `allowList.join(' ')`. Permissions Policy separates features with `;`, so `allow="camera microphone"` doesn't grant both (a browser test here shows it). This library and the official `AppBridge` both use `"; "`. Fix proposed upstream: [modelcontextprotocol/ext-apps#823](https://github.com/modelcontextprotocol/ext-apps/pull/823).
 
 ## Testing
 ```bash
